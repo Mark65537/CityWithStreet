@@ -1,4 +1,5 @@
 using System.Data;
+using System.Data.Common;
 using System.Data.SqlClient;
 
 namespace CityWithStreet
@@ -10,13 +11,17 @@ namespace CityWithStreet
             InitializeComponent();
         }
 
+        private string connectionString;
+        private SqlDataAdapter dataAdapter;
+        private DataTable table;
+
         private void Form1_Load(object sender, EventArgs e)
         {
-            string databaseName = "Database1.mdf";
             //string connectionString = $"Data Source=" +
             //$"(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\"D:\\programs\\0A studio мои проги\\CityWithStreet\\CityWithStreet\\Database1.mdf\";" +
             //$"Integrated Security=True";
 
+            string databaseName = "Database1.mdf";
             string currentDirectory = Directory.GetCurrentDirectory();
             string databasePath = Path.Combine(currentDirectory, databaseName);
 
@@ -35,7 +40,7 @@ namespace CityWithStreet
             }
             #endregion
 
-            string connectionString = $"Data Source=" +
+            connectionString = $"Data Source=" +
                 $"(LocalDB)\\MSSQLLocalDB;AttachDbFilename={databasePath};" +
                 $"Integrated Security=True";
 
@@ -50,17 +55,42 @@ namespace CityWithStreet
                     INNER JOIN Localities AS L ON M.localityId = L.Id
                     INNER JOIN HouseData AS H ON M.houseId = H.Id";
 
-                using (SqlDataAdapter adapter = new SqlDataAdapter(query, connection))
-                {
-                    DataTable table = new DataTable();
-                    adapter.Fill(table);
+                dataAdapter = new SqlDataAdapter(query, connection);
+                table = new DataTable();
+                dataAdapter.Fill(table);
 
-                    dGV_main.DataSource = table;
-                }
+                dGV_main.DataSource = table;
+                
             }
             #endregion
 
 
+        }
+
+        private void b_mdelete_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in dGV_main.SelectedRows)
+            {
+                dGV_main.Rows.Remove(row);
+            }
+        }
+
+        private void b_msave_Click(object sender, EventArgs e)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                // Создайте SqlCommandBuilder, чтобы автоматически генерировать SQL-запросы для обновления базы данных
+                //using (SqlCommandBuilder builder = new SqlCommandBuilder(dataAdapter))
+                //{
+                    //dataAdapter.UpdateCommand = builder.GetUpdateCommand();
+                    //dataAdapter.InsertCommand = builder.GetInsertCommand();
+                    //dataAdapter.DeleteCommand = builder.GetDeleteCommand();
+
+                    dataAdapter.Update(table);
+                //}
+            }
         }
     }
 }

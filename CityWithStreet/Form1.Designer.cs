@@ -29,9 +29,11 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
+            b_mdelete = new Button();
             dGV_main = new DataGridView();
             panel2 = new Panel();
             dGV_submain = new DataGridView();
+            b_msave = new Button();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dGV_main).BeginInit();
             panel2.SuspendLayout();
@@ -40,11 +42,23 @@
             // 
             // panel1
             // 
+            panel1.Controls.Add(b_msave);
+            panel1.Controls.Add(b_mdelete);
             panel1.Controls.Add(dGV_main);
             panel1.Location = new Point(12, 45);
             panel1.Name = "panel1";
             panel1.Size = new Size(589, 429);
             panel1.TabIndex = 0;
+            // 
+            // b_mdelete
+            // 
+            b_mdelete.Location = new Point(511, 14);
+            b_mdelete.Name = "b_mdelete";
+            b_mdelete.Size = new Size(75, 23);
+            b_mdelete.TabIndex = 1;
+            b_mdelete.Text = "Удалить";
+            b_mdelete.UseVisualStyleBackColor = true;
+            b_mdelete.Click += b_mdelete_Click;
             // 
             // dGV_main
             // 
@@ -73,6 +87,16 @@
             dGV_submain.Size = new Size(514, 383);
             dGV_submain.TabIndex = 0;
             // 
+            // b_msave
+            // 
+            b_msave.Location = new Point(430, 14);
+            b_msave.Name = "b_msave";
+            b_msave.Size = new Size(75, 23);
+            b_msave.TabIndex = 2;
+            b_msave.Text = "Сохранить";
+            b_msave.UseVisualStyleBackColor = true;
+            b_msave.Click += b_msave_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -96,5 +120,7 @@
         private DataGridView dGV_main;
         private Panel panel2;
         private DataGridView dGV_submain;
+        private Button b_mdelete;
+        private Button b_msave;
     }
 }
