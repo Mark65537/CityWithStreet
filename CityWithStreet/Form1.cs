@@ -32,7 +32,7 @@ namespace CityWithStreet
                     MessageBox.Show("Database file not found.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-            } 
+            }
             #endregion
 
             string connectionString = $"Data Source=" +
@@ -44,14 +44,20 @@ namespace CityWithStreet
             {
                 connection.Open();
 
-                using (SqlDataAdapter adapter = new SqlDataAdapter("SELECT * FROM Localities", connection))
+                string query = @"
+                    SELECT L.name AS LocalityName, H.houseNumber AS HouseName, H.totalApartments 
+                    FROM Main AS M
+                    INNER JOIN Localities AS L ON M.localityId = L.Id
+                    INNER JOIN HouseData AS H ON M.houseId = H.Id";
+
+                using (SqlDataAdapter adapter = new SqlDataAdapter(query, connection))
                 {
                     DataTable table = new DataTable();
                     adapter.Fill(table);
 
                     dGV_main.DataSource = table;
                 }
-            } 
+            }
             #endregion
 
 

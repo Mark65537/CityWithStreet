@@ -2,6 +2,7 @@
 DECLARE @i INT = 0;
 WHILE @i < 300
 BEGIN
+    
     INSERT INTO [dbo].[HouseData] 
     (
         [houseNumber], 

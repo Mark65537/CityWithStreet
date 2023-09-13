@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
-            panel2 = new Panel();
             dGV_main = new DataGridView();
+            panel2 = new Panel();
             dGV_submain = new DataGridView();
             panel1.SuspendLayout();
-            panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dGV_main).BeginInit();
+            panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dGV_submain).BeginInit();
             SuspendLayout();
             // 
@@ -46,6 +46,16 @@
             panel1.Size = new Size(589, 429);
             panel1.TabIndex = 0;
             // 
+            // dGV_main
+            // 
+            dGV_main.AllowUserToOrderColumns = true;
+            dGV_main.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dGV_main.Location = new Point(3, 43);
+            dGV_main.Name = "dGV_main";
+            dGV_main.RowTemplate.Height = 25;
+            dGV_main.Size = new Size(583, 383);
+            dGV_main.TabIndex = 0;
+            // 
             // panel2
             // 
             panel2.Controls.Add(dGV_submain);
@@ -53,15 +63,6 @@
             panel2.Name = "panel2";
             panel2.Size = new Size(520, 429);
             panel2.TabIndex = 1;
-            // 
-            // dGV_main
-            // 
-            dGV_main.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dGV_main.Location = new Point(3, 43);
-            dGV_main.Name = "dGV_main";
-            dGV_main.RowTemplate.Height = 25;
-            dGV_main.Size = new Size(583, 383);
-            dGV_main.TabIndex = 0;
             // 
             // dGV_submain
             // 
@@ -83,8 +84,8 @@
             Text = "Form1";
             Load += Form1_Load;
             panel1.ResumeLayout(false);
-            panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dGV_main).EndInit();
+            panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dGV_submain).EndInit();
             ResumeLayout(false);
         }
