@@ -20,7 +20,7 @@ namespace CityWithStreet
             string currentDirectory = Directory.GetCurrentDirectory();
             string databasePath = Path.Combine(currentDirectory, databaseName);
 
-            #region Нахождение базы
+            #region Поиск базы
             if (!File.Exists(databasePath)) // Если файл не найден в текущей директории
             {
                 // Попробуем найти файл в родительской директории
