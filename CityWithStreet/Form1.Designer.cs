@@ -95,6 +95,7 @@
             dGV_main.RowTemplate.Height = 25;
             dGV_main.Size = new Size(583, 383);
             dGV_main.TabIndex = 0;
+            dGV_main.CellMouseClick += dGV_main_CellMouseClick;
             // 
             // panel2
             // 
