@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
+            b_update = new Button();
             b_msave = new Button();
             b_mdelete = new Button();
             dGV_main = new DataGridView();
             panel2 = new Panel();
             dGV_submain = new DataGridView();
-            b_update = new Button();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dGV_main).BeginInit();
             panel2.SuspendLayout();
@@ -53,6 +53,16 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(589, 429);
             panel1.TabIndex = 0;
+            // 
+            // b_update
+            // 
+            b_update.Location = new Point(349, 14);
+            b_update.Name = "b_update";
+            b_update.Size = new Size(75, 23);
+            b_update.TabIndex = 3;
+            b_update.Text = "Обновить";
+            b_update.UseVisualStyleBackColor = true;
+            b_update.Click += b_update_Click;
             // 
             // b_msave
             // 
@@ -81,6 +91,7 @@
             dGV_main.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dGV_main.Location = new Point(3, 43);
             dGV_main.Name = "dGV_main";
+            dGV_main.ReadOnly = true;
             dGV_main.RowTemplate.Height = 25;
             dGV_main.Size = new Size(583, 383);
             dGV_main.TabIndex = 0;
@@ -102,16 +113,6 @@
             dGV_submain.RowTemplate.Height = 25;
             dGV_submain.Size = new Size(514, 383);
             dGV_submain.TabIndex = 0;
-            // 
-            // b_update
-            // 
-            b_update.Location = new Point(349, 14);
-            b_update.Name = "b_update";
-            b_update.Size = new Size(75, 23);
-            b_update.TabIndex = 3;
-            b_update.Text = "Обновить";
-            b_update.UseVisualStyleBackColor = true;
-            b_update.Click += b_update_Click;
             // 
             // Form1
             // 
