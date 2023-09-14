@@ -15,12 +15,8 @@ namespace CityWithStreet
         private SqlDataAdapter dataAdapter;
         private DataTable table;
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void Load_base()
         {
-            //string connectionString = $"Data Source=" +
-            //$"(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\"D:\\programs\\0A studio мои проги\\CityWithStreet\\CityWithStreet\\Database1.mdf\";" +
-            //$"Integrated Security=True";
-
             string databaseName = "Database1.mdf";
             string currentDirectory = Directory.GetCurrentDirectory();
             string databasePath = Path.Combine(currentDirectory, databaseName);
@@ -44,27 +40,30 @@ namespace CityWithStreet
                 $"(LocalDB)\\MSSQLLocalDB;AttachDbFilename={databasePath};" +
                 $"Integrated Security=True";
 
+            string query = @"
+                    SELECT L.name AS LocalityName, H.houseNumber AS HouseName, H.totalApartments 
+                    FROM Main AS M
+                    INNER JOIN Localities AS L ON M.localityId = L.Id
+                    INNER JOIN HouseData AS H ON M.houseId = H.Id";
+
             #region Подключение к базе
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
 
-                string query = @"
-                    SELECT L.name AS LocalityName, H.houseNumber AS HouseName, H.totalApartments 
-                    FROM Main AS M
-                    INNER JOIN Localities AS L ON M.localityId = L.Id
-                    INNER JOIN HouseData AS H ON M.houseId = H.Id";
 
                 dataAdapter = new SqlDataAdapter(query, connection);
                 table = new DataTable();
                 dataAdapter.Fill(table);
 
                 dGV_main.DataSource = table;
-                
+
             }
             #endregion
-
-
+        }
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            Load_base();
         }
 
         private void b_mdelete_Click(object sender, EventArgs e)
@@ -80,17 +79,44 @@ namespace CityWithStreet
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
+                using (SqlTransaction sqlTran = connection.BeginTransaction())//мы используем транзакции для обеспечения целостности данных. Если во время выполнения запросов произойдет ошибка, все изменения будут откатываться.
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        cmd.Connection = connection;
+                        cmd.Transaction = sqlTran;
+                        cmd.CommandText = @"
+                          DELETE FROM Main;
+                          ";
+                        cmd.ExecuteNonQuery();
+                        cmd.CommandText = @"
+                          INSERT INTO Main (localityId, houseId)
+                            VALUES (
+                                (SELECT Id FROM Localities WHERE name = @localityName), 
+                                (SELECT Id FROM HouseData WHERE houseNumber = @houseNumber)
+                            )
+                            ";
 
-                // Создайте SqlCommandBuilder, чтобы автоматически генерировать SQL-запросы для обновления базы данных
-                //using (SqlCommandBuilder builder = new SqlCommandBuilder(dataAdapter))
-                //{
-                    //dataAdapter.UpdateCommand = builder.GetUpdateCommand();
-                    //dataAdapter.InsertCommand = builder.GetInsertCommand();
-                    //dataAdapter.DeleteCommand = builder.GetDeleteCommand();
-
-                    dataAdapter.Update(table);
-                //}
+                        foreach (DataGridViewRow row in dGV_main.Rows)
+                        {
+                            if (!row.IsNewRow)
+                            {
+                                cmd.Parameters.Clear();
+                                cmd.Parameters.AddWithValue("@localityName", (string)row.Cells["LocalityName"].Value);
+                                cmd.Parameters.AddWithValue("@houseNumber", (string)row.Cells["HouseName"].Value);
+                                cmd.ExecuteNonQuery();
+                            }
+                        }
+                    }
+                    sqlTran.Commit();
+                }
             }
+            MessageBox.Show("База сохранена", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void b_update_Click(object sender, EventArgs e)
+        {
+            Load_base();
         }
     }
 }

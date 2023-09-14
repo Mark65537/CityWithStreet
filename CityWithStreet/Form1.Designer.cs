@@ -29,11 +29,12 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
+            b_msave = new Button();
             b_mdelete = new Button();
             dGV_main = new DataGridView();
             panel2 = new Panel();
             dGV_submain = new DataGridView();
-            b_msave = new Button();
+            b_update = new Button();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dGV_main).BeginInit();
             panel2.SuspendLayout();
@@ -42,6 +43,9 @@
             // 
             // panel1
             // 
+            panel1.BackColor = SystemColors.ButtonFace;
+            panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(b_update);
             panel1.Controls.Add(b_msave);
             panel1.Controls.Add(b_mdelete);
             panel1.Controls.Add(dGV_main);
@@ -49,6 +53,16 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(589, 429);
             panel1.TabIndex = 0;
+            // 
+            // b_msave
+            // 
+            b_msave.Location = new Point(430, 14);
+            b_msave.Name = "b_msave";
+            b_msave.Size = new Size(75, 23);
+            b_msave.TabIndex = 2;
+            b_msave.Text = "Сохранить";
+            b_msave.UseVisualStyleBackColor = true;
+            b_msave.Click += b_msave_Click;
             // 
             // b_mdelete
             // 
@@ -63,6 +77,7 @@
             // dGV_main
             // 
             dGV_main.AllowUserToOrderColumns = true;
+            dGV_main.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllHeaders;
             dGV_main.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dGV_main.Location = new Point(3, 43);
             dGV_main.Name = "dGV_main";
@@ -72,6 +87,7 @@
             // 
             // panel2
             // 
+            panel2.BorderStyle = BorderStyle.FixedSingle;
             panel2.Controls.Add(dGV_submain);
             panel2.Location = new Point(607, 45);
             panel2.Name = "panel2";
@@ -87,15 +103,15 @@
             dGV_submain.Size = new Size(514, 383);
             dGV_submain.TabIndex = 0;
             // 
-            // b_msave
+            // b_update
             // 
-            b_msave.Location = new Point(430, 14);
-            b_msave.Name = "b_msave";
-            b_msave.Size = new Size(75, 23);
-            b_msave.TabIndex = 2;
-            b_msave.Text = "Сохранить";
-            b_msave.UseVisualStyleBackColor = true;
-            b_msave.Click += b_msave_Click;
+            b_update.Location = new Point(349, 14);
+            b_update.Name = "b_update";
+            b_update.Size = new Size(75, 23);
+            b_update.TabIndex = 3;
+            b_update.Text = "Обновить";
+            b_update.UseVisualStyleBackColor = true;
+            b_update.Click += b_update_Click;
             // 
             // Form1
             // 
@@ -122,5 +138,6 @@
         private DataGridView dGV_submain;
         private Button b_mdelete;
         private Button b_msave;
+        private Button b_update;
     }
 }
